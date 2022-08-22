@@ -1,11 +1,10 @@
-var WooCommerceAPI = require('woocommerce-api');
+const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
 
-const api = new WooCommerceAPI({
+const api = new WooCommerceRestApi({
     url:'http://plugin-test.local',
     consumerKey : process.env.MY_CONSUMER_KEY,
     consumerSecret : process.env.MY_CONSUMER_SECRET,
-    wpAPI:true,
-    version : 'wc/v2'
+    version : 'wc/v3'
 });
 
 

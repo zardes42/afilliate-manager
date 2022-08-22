@@ -1,13 +1,11 @@
 const { api } = require("../db/index");
 
-const wooOrders = async(res)=>{
+const wooOrders = async()=>{
     
     
-     await api.get("orders",(req,response) =>{  
-      res.send( new Array(JSON.parse(response.body)[0]))
-           
-           
-       })
+    return await api.get("orders").then(res =>{
+         return res.data
+    })
 }
 
 module.exports ={

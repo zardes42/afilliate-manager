@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import { Icon } from '@iconify/react';
 import styled from 'styled-components'
 import NavBar from '../components/NavBar'
@@ -6,6 +6,7 @@ import SearchBar from '../components/SearchBar'
 import AfilliateForm from '../components/AfilliateForm';
 import {DefaultHead,DefaultTitle,DefaultContent} from '../styles/styles'
 import AfilliateList from '../components/AfilliateList';
+import axios from 'axios'
 
 const Container = styled.div`
     width: 100%;
@@ -28,8 +29,7 @@ const Head = styled(DefaultHead)``
 const Title = styled(DefaultTitle)``
 const Content = styled(DefaultContent)``
 const Card = styled.div` 
-    flex: 1;
-    max-width: 200px;
+    width: 200px;
     height: 150px;
     border-radius: 20px;
     background-color: white;
@@ -60,6 +60,22 @@ const Value = styled.span`
 
 
 const Home = () => {
+    const[data,setData]= useState({})
+    console.log(data)
+    const setDashboard = async() => {
+       
+        try{
+            await axios.get('http://localhost:4000/api/dashboard').then(res => {
+                setData(res.data.data)
+            })
+          }
+          catch(error){
+            console.log(error.message)
+      
+          }
+      
+        }
+    useEffect(() => {setDashboard()},[])
 
     let iconSize = '25' ;
     let iconColor = '#393744';
@@ -80,7 +96,7 @@ const Home = () => {
                                 <Icon icon="bi:person"  width="25" height="25" color="#393744" />
                             </Top>
                             <Bottom>
-                                <Value>0</Value>
+                                <Value>{data.afilliates}</Value>
                             </Bottom>
                         </CardInfo>
                     </Card>
@@ -91,7 +107,7 @@ const Home = () => {
                                 <Icon icon="eva:shopping-cart-outline"  width={iconSize} height={iconSize} color={iconColor} />
                             </Top>
                             <Bottom>
-                                <Value>0</Value>
+                                <Value>{data.total_orders}</Value>
                             </Bottom>
                         </CardInfo>
                     </Card>
@@ -102,18 +118,18 @@ const Home = () => {
                                 <Icon icon="ic:round-done"  width={iconSize} height={iconSize} color={iconColor} />
                             </Top>
                             <Bottom>
-                                <Value>0</Value>
+                                <Value>{data.completed_orders}</Value>
                             </Bottom>
                         </CardInfo>
                     </Card>
                     <Card>
                         <CardInfo >
                             <Top>
-                                <TopTitle>Add Afilliates</TopTitle>
-                                <Icon icon="ic:baseline-person-add-alt"  width={iconSize} height={iconSize} color={iconColor} />
+                                <TopTitle>Proccessing Orders</TopTitle>
+                                <Icon icon="uim:process"  width={iconSize} height={iconSize} color={iconColor} />
                             </Top>
                             <Bottom>
-                                <Value>0</Value>
+                                <Value>{data.processing_orders}</Value>
                             </Bottom>
                         </CardInfo>
                     </Card>

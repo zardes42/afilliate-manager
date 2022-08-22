@@ -5,7 +5,7 @@ const {wooOrders} = WooServices
 
 const getAllOrdersFromApi = async(req, res)=>{
     try{
-         await wooOrders(res)
+          res.send( await wooOrders())
     }catch(err){console.log(err)}
    
 }
